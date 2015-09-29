@@ -1,0 +1,1 @@
+python ./code/find_jaccard_similar_sentences.py sentences.py > ./results/jaccard_similar_pairs.txt
