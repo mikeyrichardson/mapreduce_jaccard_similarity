@@ -46,9 +46,6 @@ class EditDistanceOneSentenceFinder(MRJob):
                         yield 'sum', num_pairs / 2
                     else:
                         yield 'sum', num_pairs
-                else:
-                    print '1) ' + s1
-                    print '2) ' + s2
     def sum_counts(self, _, counts):
         yield None, sum(counts)
 
