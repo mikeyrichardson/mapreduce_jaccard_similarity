@@ -12,22 +12,16 @@ class DuplicateSentenceFinder(MRJob):
     A script to find and count duplicate sentences.
     """
 
-    def hash_lines(self, _, line):
+    def extract_sentences(self, _, line):
         words = line.split()
         sentence = ' '.join(words[1:])
-        yield (hash(sentence), sentence[:5]), sentence
+        yield sentence, 1
 
-    def remove_and_count_duplicates(self, hash, sentences):
-        sentence = None
-        sentence_count = 0
-        for s in sentences:
-            if not sentence:
-                sentence = s
-            sentence_count += 1
-        yield sentence_count, sentence
+    def remove_and_count_duplicates(self, sentence, counts):
+        yield sum(counts), sentence
 
     def steps(self):
-        return [MRStep(mapper=self.hash_lines,
+        return [MRStep(mapper=self.extract_sentences,
                        reducer=self.remove_and_count_duplicates)]
 
 
